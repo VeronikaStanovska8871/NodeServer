@@ -1,7 +1,15 @@
 const express = require('express')
 const app = express()
 
+const connectionURL='mongodb://localhost:27017'
+const databaseName='taskmanager'
+const MongoClient = require('mongodb').MongoClient
 
+app.use(
+    express.urlencoded({
+        extended:true
+    })
+)
 app.get('', (req, res)=> {
     res.send('Hello')
 })
@@ -32,3 +40,18 @@ app.get('/task', (req, res)=> {
    })
 })
 
+app.listen(3000, ()=>{
+    console.log('Server is running')
+})
+
+
+app.get('/task/new', (req, res)=> {
+  const data = req.body;
+  const name = data.name;
+  const priority = data.priority;
+  let price = 'undefined';
+  if(data.price){
+      price=data.price;
+  }
+  console.log(name, '', priority, '', price);
+})
